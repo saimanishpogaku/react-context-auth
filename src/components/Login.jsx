@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import "../css/Login.css";
 
 function Login() {
   const { user, login, logout } = useAuth();
@@ -15,17 +16,13 @@ function Login() {
   }
 
   return (
-    <div>
-      Username: <input type="text" value={username} onChange={(e) => {setUsername(e.target.value)}}></input>
-      Password: <input type="text" value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
+    <div className="login-container">
+      <form className="login-card">
+        Username: <input type="text" value={username} onChange={(e) => {setUsername(e.target.value)}}></input>
+        Password: <input type="text" value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
 
-      <button onClick={() => handleLogin()}>
-        Login
-      </button>
-
-      <button onClick={logout}>
-        Logout
-      </button>
+        <button onClick={() => handleLogin()}>Login</button>
+      </form> 
     </div>
   );
 }
