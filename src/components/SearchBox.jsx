@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSelector } from "react";
 import "../css/SearchBox.css"
+import { useDispatch } from "react-redux";
+import { setAllProducts } from "../slices/productsSlice";
 
-export default function SearchBox({ setProducts }) {
+export default function SearchBox() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  const dispatch = useDispatch()
 
   // Debouncing logic
   useEffect(() => {
@@ -17,12 +21,13 @@ export default function SearchBox({ setProducts }) {
   // API call (or console log)
     async function searchProducts(q){
         try {
-            let products = await fetch(`https://dummyjson.com/products/search?q=${q}`)
+            if(!query) return;
+            let products = await fetch(`https://dummyjson.com/products/search?q=${q}&limit=500`)
             products = await products.json();
             // console.log(products)
-            setProducts(prevproducts?.products)
+            dispatch(setAllProducts(products?.products))
         } catch (error) {
-            console.log("ERROR in getAllProducts() :",error)
+            console.log("ERROR in searchProducts() :",error)
         }
     }
 
